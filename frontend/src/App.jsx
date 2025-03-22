@@ -27,6 +27,7 @@ import DoctorPanel from './components/DoctorPanel';
 import AdminPanel from './components/AdminPanel';
 import Navbar from './components/Navbar';
 import PatientForm from './pages/PatientForm';
+import BookAppointment from './pages/BookAppointment';
 
 const App = () => {
   return (
@@ -39,6 +40,8 @@ const App = () => {
         <Route path="/doctor" element={<DoctorPanel />} />
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/patientform" element={<PatientForm/>} />
+        <Route path="/Appointment" element={<BookAppointment/>} />
+        
       </Routes>
     </Router>
   );
