@@ -35,6 +35,7 @@ const Navbar = () => {
   return (
     <Nav>
       <StyledLink to="/">Home</StyledLink>
+      <StyledLink to="/Appointment">Book Appointment</StyledLink>
       {!token ? (
         <>
           <StyledLink to="/login">Login</StyledLink>
