@@ -21,6 +21,17 @@ router.post('/book', auth, async (req, res) => {
   }
 });
 
+// Get All Doctors
+router.get('/doctors',  async (req, res) => {
+    try {
+      const doctors = await User.find({ role: 'doctor' }).select('name email');
+      res.json(doctors);
+    } catch (err) {
+      res.status(500).json({ msg: 'Server error' });
+    }
+  });
+
+
 // View Appointments (Doctor)
 router.get('/doctor', auth, async (req, res) => {
   if (req.user.role !== 'doctor') return res.status(403).json({ msg: 'Access denied' });
