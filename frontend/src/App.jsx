@@ -28,6 +28,7 @@ import AdminPanel from './components/AdminPanel';
 import Navbar from './components/Navbar';
 import PatientForm from './pages/PatientForm';
 import BookAppointment from './pages/BookAppointment';
+import Appointment from './pages/Appointment';
 
 const App = () => {
   return (
@@ -41,6 +42,8 @@ const App = () => {
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/patientform" element={<PatientForm/>} />
         <Route path="/Appointment" element={<BookAppointment/>} />
+        <Route path="/Appointments" element={<Appointment/>} />
+
         
       </Routes>
     </Router>

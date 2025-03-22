@@ -36,6 +36,8 @@ const Navbar = () => {
     <Nav>
       <StyledLink to="/">Home</StyledLink>
       <StyledLink to="/Appointment">Book Appointment</StyledLink>
+      <StyledLink to="/Appointments">My-Appointments</StyledLink>
+
       {!token ? (
         <>
           <StyledLink to="/login">Login</StyledLink>

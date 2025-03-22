@@ -33,42 +33,45 @@ router.get('/doctors', async (req, res) => {
 
 
   // Get Appointment Status (Patient)
-// router.get('/status/:appointmentId', auth, async (req, res) => {
-//   if (req.user.role !== 'patient') return res.status(403).json({ msg: 'Access denied' });
-//   try {
-//     const appointment = await Appointment.findById(req.params.appointmentId);
-//     if (!appointment || appointment.patientId.toString() !== req.user.id) {
-//       return res.status(404).json({ msg: 'Appointment not found' });
-//     }
-//     res.json({ status: appointment.status });
-//   } catch (err) {
-//     res.status(500).json({ msg: 'Server error' });
-//   }
-// });
-
-
-// GET /api/appointments/my-appointments
-// Get all appointments requested by the authenticated patient
-router.get('/my-appointments', auth, async (req, res) => {
-  if (req.user.role !== 'patient') {
-    return res.status(403).json({ msg: 'Access denied' });
-  }
-
+router.get('/status/:appointmentId', auth, async (req, res) => {
+  if (req.user.role !== 'patient') return res.status(403).json({ msg: 'Access denied' });
   try {
-    const appointments = await Appointment.find({ patientId: req.user.id })
-      .populate('doctorId', 'name specialist') // Populate doctor details
-      .sort({ date: -1 }); // Sort by date, newest first
-
-    if (!appointments || appointments.length === 0) {
-      return res.status(404).json({ msg: 'No appointments found' });
+    const appointment = await Appointment.findById(req.params.appointmentId);
+    if (!appointment || appointment.patientId.toString() !== req.user.id) {
+      return res.status(404).json({ msg: 'Appointment not found' });
     }
-
-    res.json(appointments);
+    res.json({ status: appointment.status });
   } catch (err) {
-    console.error('Error fetching patient appointments:', err);
     res.status(500).json({ msg: 'Server error' });
   }
 });
+
+
+
+
+
+
+
+router.get('/my-appointments', auth, async (req, res) => {
+    if (req.user.role !== 'patient') {
+      return res.status(403).json({ msg: 'Access denied' });
+    }
+  
+    try {
+      const appointments = await Appointment.find({ patientId: req.user.id })
+        .populate('doctorId', 'name specialist image') // Populate doctor details
+        .sort({ date: -1 }); // Sort by date, newest first
+      if (!appointments.length) {
+        return res.status(200).json([]); // Return empty array if no appointments
+      }
+      res.json(appointments);
+    } catch (err) {
+      console.error('Error fetching patient appointments:', err);
+      res.status(500).json({ msg: 'Server error' });
+    }
+  });
+
+
 
 
 
