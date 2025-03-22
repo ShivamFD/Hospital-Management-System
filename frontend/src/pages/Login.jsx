@@ -168,7 +168,7 @@ const Login = () => {
         
         switch(role) {
           case 'patient':
-            navigate('/patient');
+            navigate('/');
             break;
           case 'doctor':
             navigate('/doctor');

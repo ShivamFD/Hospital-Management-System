@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import DoctorCard from '../components/DoctorCard';
-import bgImage from '../assets/bg.jpg'; // Ensure you have this image in your assets folder
+import { Link } from 'react-router-dom';
+import bgImage from '../assets/bg.jpg'; // Ensure this image exists in your assets folder
 
 // Animation for fade-in effect
 const fadeIn = keyframes`
@@ -9,11 +9,11 @@ const fadeIn = keyframes`
   to { opacity: 1; }
 `;
 
-// Background section with the static background image
+// Background section with the static background image set to full viewport height
 const BackgroundSection = styled.section`
   position: relative;
   background: url(${bgImage}) no-repeat center center/cover;
-  min-height: 450px;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,12 +60,21 @@ const Subtitle = styled.p`
   }
 `;
 
-// Main container for additional page content
-const Container = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
+// Styled button using Link for navigation
+const AppointmentButton = styled(Link)`
+  display: inline-block;
+  background-color: #ff6347;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.3s;
+  &:hover {
+    background-color: #ff4500;
+    transform: scale(1.05);
+  }
 `;
 
 const Home = () => (
@@ -78,12 +87,11 @@ const Home = () => (
           Step into a world where healthcare meets compassion and innovation. <br />
           Your well-being is our priority. Discover the future of personalized care today!
         </Subtitle>
+        <AppointmentButton to="/Appointment">
+          Book Appointment
+        </AppointmentButton>
       </BgContent>
     </BackgroundSection>
-    <Container>
-      {/* You can add more components or inspiring content here */}
-      <DoctorCard />
-    </Container>
   </>
 );
 
