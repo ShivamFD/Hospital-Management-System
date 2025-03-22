@@ -21,10 +21,9 @@ router.post('/book', auth, async (req, res) => {
   }
 });
 
-// Get All Doctors
-router.get('/doctors',  async (req, res) => {
+router.get('/doctors', async (req, res) => {
     try {
-      const doctors = await User.find({ role: 'doctor' }).select('name email');
+      const doctors = await User.find({ role: 'doctor' }).select('name email specialist image');
       res.json(doctors);
     } catch (err) {
       res.status(500).json({ msg: 'Server error' });
