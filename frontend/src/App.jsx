@@ -20,13 +20,13 @@
 
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './components/Login';
+import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
-import PatientPanel from './components/PatientPanel';
 import DoctorPanel from './components/DoctorPanel';
 import AdminPanel from './components/AdminPanel';
 import Navbar from './components/Navbar';
+import PatientForm from './pages/PatientForm';
 
 const App = () => {
   return (
@@ -36,9 +36,9 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/patient" element={<PatientPanel />} />
         <Route path="/doctor" element={<DoctorPanel />} />
         <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/patientform" element={<PatientForm/>} />
       </Routes>
     </Router>
   );
