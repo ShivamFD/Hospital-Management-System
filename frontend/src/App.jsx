@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './components/Login'; // Make sure this path is correct
-import Register from './components/Register';// Make sure this path is correct
+import Login from './pages/Login'; 
+import Register from './pages/Register';
 
 const App = () => {
   return (
