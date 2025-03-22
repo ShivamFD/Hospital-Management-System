@@ -774,7 +774,7 @@ const AdminPanel = () => {
                 </TableHead>
                 <tbody>
                   {Array.isArray(stats.appointments) && stats.appointments.length > 0 ? (
-                    stats.appointments.slice(0, 5).map((appt) => (
+                    stats.appointments.map((appt) => (
                       <TableRow key={appt._id}>
                         <TableCell>{appt.patientId?.name || 'Unknown Patient'}</TableCell>
                         <TableCell>{appt.doctorId?.name || 'Unknown Doctor'}</TableCell>
