@@ -27,6 +27,7 @@ import DoctorPanel from './components/DoctorPanel';
 import AdminPanel from './components/AdminPanel';
 import Navbar from './components/Navbar';
 import PatientForm from './pages/PatientForm';
+import ApprovePatient from './pages/ApprovePatient';
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="/doctor" element={<DoctorPanel />} />
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/patientform" element={<PatientForm/>} />
+        <Route path="/approvepatient" element={<ApprovePatient/>} />
       </Routes>
     </Router>
   );
