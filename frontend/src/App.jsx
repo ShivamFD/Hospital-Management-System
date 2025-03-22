@@ -27,6 +27,7 @@ import DoctorPanel from './components/DoctorPanel';
 import AdminPanel from './components/AdminPanel';
 import Navbar from './components/Navbar';
 import PatientForm from './pages/PatientForm';
+// import ApprovePatient from './pages/ApprovePatient';
 import BookAppointment from './pages/BookAppointment';
 import Appointment from './pages/Appointment';
 
