@@ -1,0 +1,51 @@
+const express = require('express');
+const router = express.Router();
+const auth = require('../middleware/auth');
+const Appointment = require('../models/Appointment');
+const User = require('../models/User');
+
+// Book Appointment (Patient)
+router.post('/book', auth, async (req, res) => {
+  if (req.user.role !== 'patient') return res.status(403).json({ msg: 'Access denied' });
+  const { doctorId, date } = req.body;
+  try {
+    const appointment = new Appointment({
+      patientId: req.user.id,
+      doctorId,
+      date,
+    });
+    await appointment.save();
+    res.json({ msg: 'Appointment booked', appointment });
+  } catch (err) {
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// View Appointments (Doctor)
+router.get('/doctor', auth, async (req, res) => {
+  if (req.user.role !== 'doctor') return res.status(403).json({ msg: 'Access denied' });
+  try {
+    const appointments = await Appointment.find({ doctorId: req.user.id }).populate('patientId', 'name email');
+    res.json(appointments);
+  } catch (err) {
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// Accept Appointment (Doctor)
+router.put('/accept/:id', auth, async (req, res) => {
+  if (req.user.role !== 'doctor') return res.status(403).json({ msg: 'Access denied' });
+  try {
+    const appointment = await Appointment.findById(req.params.id);
+    if (!appointment || appointment.doctorId.toString() !== req.user.id) {
+      return res.status(404).json({ msg: 'Appointment not found' });
+    }
+    appointment.status = 'accepted';
+    await appointment.save();
+    res.json({ msg: 'Appointment accepted', appointment });
+  } catch (err) {
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+module.exports = router;
