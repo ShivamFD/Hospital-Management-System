@@ -1,247 +1,239 @@
-// import React, { useState } from 'react';
-// import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
-// import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { keyframes } from 'styled-components';
+import { Hospital, UserPlus, Eye, EyeOff } from 'lucide-react';
+import axios from 'axios';
 
-// const Container = styled.div`
-//   max-width: 800px;
-//   margin: 0 auto;
-//   padding: 20px;
-// `;
+// Fade-in animation
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
 
-// const Title = styled.h2`
-//   font-size: 24px;
-//   margin-bottom: 20px;
-// `;
-
-// const Form = styled.form`
-//   display: flex;
-//   flex-direction: column;
-// `;
-
-// const Input = styled.input`
-//   width: 100%;
-//   padding: 8px;
-//   margin: 10px 0;
-//   border: 1px solid #ccc;
-//   border-radius: 4px;
-// `;
-
-// const Select = styled.select`
-//   width: 100%;
-//   padding: 8px;
-//   margin: 10px 0;
-//   border: 1px solid #ccc;
-//   border-radius: 4px;
-// `;
-
-// const Button = styled.button`
-//   background-color: #007bff;
-//   color: white;
-//   padding: 8px;
-//   border: none;
-//   border-radius: 4px;
-//   cursor: pointer;
-//   &:hover {
-//     background-color: #0056b3;
-//   }
-// `;
-
-// const Register = () => {
-//   const [name, setName] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [role, setRole] = useState('patient');
-//   const navigate = useNavigate();
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, 
-//         { name, email, password, role });
-//       navigate('/login');
-//     } catch (err) {
-//       alert('Registration failed');
-//     }
-//   };
-
-//   return (
-//     <Container>
-//       <Title>Register</Title>
-//       <Form onSubmit={handleSubmit}>
-//         <Input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
-//         <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-//         <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-//         <Select value={role} onChange={(e) => setRole(e.target.value)}>
-//           <option value="patient">Patient</option>
-//           <option value="doctor">Doctor</option>
-//           <option value="admin">Admin</option>
-//         </Select>
-//         <Button type="submit">Register</Button>
-//       </Form>
-//     </Container>
-//   );
-// };
-
-// export default Register;
-
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-
-// Styled components
+// Main container with a clean gradient background
 const Container = styled.div`
-  max-width: 400px;
-  margin: 50px auto;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+`;
+
+// Form container with a subtle shadow and responsive padding
+const FormWrapper = styled.div`
+  background: #fff;
   border-radius: 8px;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: ${fadeIn} 0.5s ease-out;
+
+  @media (max-width: 480px) {
+    padding: 20px;
+  }
 `;
 
-const Title = styled.h1`
-  text-align: center;
+// Header container for title and icon
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+`;
+
+// Title text with HMS style
+const Title = styled.h2`
+  font-size: 24px;
   color: #333;
-  margin-bottom: 20px;
+  margin-left: 10px;
 `;
 
+// Styled form element
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 15px;
 `;
 
+// Label styling
+const Label = styled.label`
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+`;
+
+// Input field styling with focus and transition effects
 const Input = styled.input`
-  padding: 10px;
-  border: 1px solid #ddd;
+  padding: 10px 40px 10px 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccd6dd;
   border-radius: 4px;
   font-size: 16px;
-  
+  transition: border-color 0.3s;
+
   &:focus {
+    border-color: #1d72b8;
     outline: none;
-    border-color: #007bff;
   }
 `;
 
-const Select = styled.select`
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  
-  &:focus {
-    outline: none;
-    border-color: #007bff;
-  }
+// Container for password input and toggle icon
+const PasswordInputContainer = styled.div`
+  position: relative;
+  margin-bottom: 20px;
 `;
 
+// Styled eye icon container
+const ToggleIcon = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #1d72b8;
+`;
+
+// Submit button with hover and transition effects
 const Button = styled.button`
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
+  padding: 12px;
+  background: #1d72b8;
   border: none;
+  color: #fff;
+  font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
-  
-  &:hover {
-    background-color: #0056b3;
-  }
-  
-  &:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-`;
+  transition: background 0.3s, transform 0.2s;
 
-const ErrorMessage = styled.p`
-  color: #dc3545;
-  text-align: center;
-  margin: 10px 0;
+  &:hover {
+    background: #155d8b;
+    transform: translateY(-2px);
+  }
 `;
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('patient');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const [showPassword, setShowPassword] = useState(false);
 
-  // Hardcoded URL - replace with your actual backend URL
-  const API_URL = 'http://localhost:5000/api/auth/register'; // Change this to your backend URL
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-  const handleSubmit = (e) => {
+  const handleTogglePassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setIsLoading(true);
 
-    fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, email, password, role })
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Registration failed');
-        }
-        return response.json();
-      })
-      .then(() => {
-        navigate('/login');
-      })
-      .catch(err => {
-        setError(err.message || 'Registration failed. Please try again.');
-      })
-      .finally(() => {
-        setIsLoading(false);
+    // Ensure passwords match
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    // Create userData object. The backend expects:
+    // { name, email, password, role }
+    const userData = {
+      name: formData.fullName,
+      email: formData.email,
+      password: formData.password,
+      role: "patient" // Default role for registration
+    };
+
+    try {
+      // Update the URL to your backend API endpoint.
+      const response = await axios.post('http://localhost:5000/api/auth/register', userData);
+      alert('Registration successful!');
+      console.log('Registered user:', response.data);
+      // Clear the form if needed
+      setFormData({
+        fullName: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
       });
+    } catch (error) {
+      console.error('Error registering user:', error.response || error);
+      alert(
+        error.response?.data?.msg || 'Registration failed. Please try again.'
+      );
+    }
   };
 
   return (
     <Container>
-      <Title>Register</Title>
-      <Form onSubmit={handleSubmit}>
-        <Input 
-          type="text" 
-          placeholder="Name" 
-          value={name} 
-          onChange={(e) => setName(e.target.value)} 
-          required 
-          disabled={isLoading}
-        />
-        <Input 
-          type="email" 
-          placeholder="Email" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          required 
-          disabled={isLoading}
-        />
-        <Input 
-          type="password" 
-          placeholder="Password" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          required 
-          disabled={isLoading}
-        />
-        <Select 
-          value={role} 
-          onChange={(e) => setRole(e.target.value)}
-          disabled={isLoading}
-        >
-          <option value="patient">Patient</option>
-          <option value="doctor">Doctor</option>
-          <option value="admin">Admin</option>
-        </Select>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? 'Registering...' : 'Register'}
-        </Button>
-      </Form>
+      <FormWrapper>
+        <Header>
+          <Hospital size={32} color="#1d72b8" />
+          <Title>Patient Registration</Title>
+        </Header>
+        <Form onSubmit={handleSubmit}>
+          <Label htmlFor="fullName">Full Name</Label>
+          <Input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="Enter your full name"
+            value={formData.fullName}
+            onChange={handleChange}
+            required
+          />
+
+          <Label htmlFor="email">Email</Label>
+          <Input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+
+          <Label htmlFor="password">Password</Label>
+          <PasswordInputContainer>
+            <Input
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            <ToggleIcon onClick={handleTogglePassword}>
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </ToggleIcon>
+          </PasswordInputContainer>
+
+          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <PasswordInputContainer>
+            <Input
+              type={showPassword ? 'text' : 'password'}
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm your password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+            <ToggleIcon onClick={handleTogglePassword}>
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </ToggleIcon>
+          </PasswordInputContainer>
+
+          <Button type="submit">
+            <UserPlus size={18} style={{ marginRight: '5px', verticalAlign: 'middle' }} />
+            Register
+          </Button>
+        </Form>
+      </FormWrapper>
     </Container>
   );
 };
