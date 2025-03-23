@@ -94,7 +94,7 @@ router.get('/dashboard', auth, async (req, res) => {
 
 // Upload Patient Report
 router.post('/upload-report', auth, upload.single('report'), async (req, res) => {
-  if (req.user.role !== 'admin') return res.status(403).json({ msg: 'Access denied' });
+  // if (req.user.role !== 'admin') return res.status(403).json({ msg: 'Access denied' });
   const { patientId } = req.body;
   try {
     const report = new Report({
