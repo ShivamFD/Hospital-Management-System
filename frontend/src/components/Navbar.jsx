@@ -91,6 +91,22 @@ const LogoutButton = styled.button`
   cursor: pointer;
   margin-right: 20px;
 `;
+const LogoutButton1 = styled.button`
+  display: flex;
+  align-items: center;
+  background-color: #e53935; /* Danger red color */
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  
+  &:hover {
+    background-color: #d32f2f;
+  }
+`;
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -114,7 +130,7 @@ const Navbar = () => {
   if (token && userRole === 'doctor') {
     return (
       <Nav>
-        <LogoutButton onClick={logout}>Logout</LogoutButton>
+        <LogoutButton1 onClick={logout}>Logout</LogoutButton1>
       </Nav>
     );
   }
