@@ -224,7 +224,7 @@ const AllAppointments = () => {
       const order = await orderResponse.json();
 
       const options = {
-        key: 'rzp_test_ABC123XYZ', // Replace with your actual Razorpay Key ID
+        key: 'rzp_test_lGcdgDS9fsw9qp', // Replace with your actual Razorpay Key ID
         amount: order.amount,
         currency: 'INR',
         name: 'Healthcare Service',
