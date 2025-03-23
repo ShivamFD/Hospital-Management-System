@@ -102,4 +102,21 @@ router.put('/accept/:id', auth, async (req, res) => {
   }
 });
 
+// complete Appointment (Doctor)
+router.put('/complete/:id', auth, async (req, res) => {
+  if (req.user.role !== 'doctor') return res.status(403).json({ msg: 'Access denied' });
+  try {
+    const appointment = await Appointment.findById(req.params.id);
+    if (!appointment || appointment.doctorId.toString() !== req.user.id) {
+      return res.status(404).json({ msg: 'Appointment not found' });
+    }
+    appointment.status = 'completed';
+    await appointment.save();
+    res.json({ msg: 'Appointment payment done', appointment });
+  } catch (err) {
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+
 module.exports = router;
